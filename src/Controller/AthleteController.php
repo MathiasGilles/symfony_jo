@@ -60,6 +60,7 @@ class AthleteController extends AbstractController
             $manager->persist($athlete);
             $manager->flush();
             $this->addFlash("success", "Athlete sauvegardé");
+            return $this->redirectToRoute('athlete');
         }
 
         return $this->render('athlete/athlete_new.html.twig', [
