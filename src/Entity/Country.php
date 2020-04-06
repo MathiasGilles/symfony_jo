@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class Country
      * @ORM\Column(type="string", length=255)
      */
     private $flag;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Athlete", mappedBy="country", orphanRemoval=true)
+     */
+    private $athletes;
+
+    public function __construct()
+    {
+        $this->athletes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +63,37 @@ class Country
     public function setFlag(string $flag): self
     {
         $this->flag = $flag;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Athlete[]
+     */
+    public function getAthletes(): Collection
+    {
+        return $this->athletes;
+    }
+
+    public function addAthlete(Athlete $athlete): self
+    {
+        if (!$this->athletes->contains($athlete)) {
+            $this->athletes[] = $athlete;
+            $athlete->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAthlete(Athlete $athlete): self
+    {
+        if ($this->athletes->contains($athlete)) {
+            $this->athletes->removeElement($athlete);
+            // set the owning side to null (unless already changed)
+            if ($athlete->getCountry() === $this) {
+                $athlete->setCountry(null);
+            }
+        }
 
         return $this;
     }

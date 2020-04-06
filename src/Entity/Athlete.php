@@ -32,9 +32,21 @@ class Athlete
     private $birth;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Country", inversedBy="athletes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $country;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Discipline", inversedBy="athletes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $discipline;
 
     public function getId(): ?int
     {
@@ -85,6 +97,30 @@ class Athlete
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getDiscipline(): ?Discipline
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(?Discipline $discipline): self
+    {
+        $this->discipline = $discipline;
 
         return $this;
     }
