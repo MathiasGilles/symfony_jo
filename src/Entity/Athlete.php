@@ -27,7 +27,7 @@ class Athlete
     private $lastName;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $birth;
 
