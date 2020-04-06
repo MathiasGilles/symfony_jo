@@ -27,10 +27,14 @@
                 <td>{{athlete.firstName}}</td>
                 <td>{{athlete.birth |date("d/m/Y")}}</td>
                 <td><img src="{{asset('/uploads/'~ athlete.photo)}}"
-                    style="width: 100px;height:100px;" /></td>
+                    style="width: 200px;height:200px;" /></td>
                 <td>{{athlete.discipline.name}}</td>
-                <td>{{athlete.country.name}}</td>
-                <td></td>
+                <td><img src="{{asset('/uploads/'~ athlete.country.flag)}}"
+                    style="width: 200px;height:200px;" /></td>
+                <td>
+                    <a class="btn btn-primary" href="{{path('athlete_edit', {id:athlete.id})}}">Modifier</a>
+                    <a class="btn btn-danger" href="{{path('athlete_delete', {id:athlete.id})}}">Supprimer</a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>
