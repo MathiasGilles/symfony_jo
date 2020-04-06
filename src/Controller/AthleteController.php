@@ -28,7 +28,7 @@ class AthleteController extends AbstractController
      * @Route("/athlete/new",name="athlete_new")
      * @Route("/athlete/edit/{id}",name="athlete_edit")
      */
-    public function new(Athlete $athlete = null, Request $request, TranslatorInterface $translator)
+    public function new(Athlete $athlete = null, Request $request)
     {
         if ($athlete == null) {
             $athlete = new Athlete();
@@ -64,6 +64,8 @@ class AthleteController extends AbstractController
 
         return $this->render('athlete/athlete_new.html.twig', [
             'formAthlete' => $form->createView(),
+            'editTitle' => $athlete->getId() != null,
+            'editMode' => $athlete->getId() != null
         ]);
 
     }
@@ -71,7 +73,7 @@ class AthleteController extends AbstractController
     /**
      * @Route("/athlete/delete/{id}",name="athlete_delete")
      */
-    public function delete(Athlete $athlete = null, TranslatorInterface $translator)
+    public function delete(Athlete $athlete = null)
     {
         if ($athlete != null) {
             $manager = $this->getDoctrine()->getManager();

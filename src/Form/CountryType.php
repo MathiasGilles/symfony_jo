@@ -5,7 +5,10 @@ namespace App\Form;
 use App\Entity\Country;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CountryType extends AbstractType
 {
@@ -13,7 +16,24 @@ class CountryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('flag')
+            ->add('flag', FileType::class, [
+                'label' => 'Upload Photo',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/pdf',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image',
+                    ])
+                ],
+            ])
+            ->add('save',SubmitType::class)
         ;
     }
 
