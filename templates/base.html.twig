@@ -28,6 +28,24 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="{{path('discipline')}}">Discipline</a>
                 </li>
+                {% if app.user is null%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{path('app_register')}}">Inscription</a>
+                    </li>
+                {% else %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('admin')}}">Admin</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_logout')}}">Deconnexion</a>
+                    </li>
+                {% endif %}
+                
             </ul>
         </div>
     </nav>
